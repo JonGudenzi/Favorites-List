@@ -34,6 +34,7 @@ function render() {
         li.appendChild(deleteBtn);
         deleteBtn.addEventListener("click", function() {
             favorites.splice(index, 1);
+            saveFavorites();
             render();
         })
         favList.appendChild(li);
@@ -44,3 +45,16 @@ function saveFavorites() {
     const data = JSON.stringify(favorites);
     localStorage.setItem("favorites", data);
 }
+
+function loadFavorites() {
+    const data = localStorage.getItem("favorites");
+    if (data) {
+        const parsed = JSON.parse(data);
+        favorites.length = 0;
+        parsed.forEach(function(item) {
+            favorites.push(item);
+        })
+    }
+    render();
+}
+loadFavorites();
